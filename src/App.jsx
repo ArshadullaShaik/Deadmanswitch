@@ -78,7 +78,8 @@ export default function App() {
     masterkey: '',
     beneficiarykey: '',
     email: localStorage.getItem('beneficiary_email') || '',
-    password: ''
+    password: '',
+    withdrawalPassword: ''
   });
 
   // Persist email to localStorage
@@ -89,7 +90,7 @@ export default function App() {
   // Dashboard Inputs
   const [pingDuration, setPingDuration] = useState('');
   const [depositAmount, setDepositAmount] = useState('');
-  const [withdrawOption, setWithdrawOption] = useState('1');
+  const [withdrawPassword, setWithdrawPassword] = useState('');
   const [claimPassword, setClaimPassword] = useState('');
   const [manualAddress, setManualAddress] = useState('');
 
@@ -140,7 +141,8 @@ export default function App() {
         deployParams.senkey,
         deployParams.masterkey,
         deployParams.beneficiarykey,
-        deployParams.password
+        deployParams.password,
+        deployParams.withdrawalPassword
       );
 
       const deploymentTx = await contract.waitForDeployment();
@@ -305,7 +307,6 @@ export default function App() {
     setError('');
 
     try {
-      console.log("Withdraw Option:", withdrawOption);
       console.log("Contract Data:", contractData);
       console.log("Wallet:", wallet ? wallet.address : "No wallet");
 
@@ -326,10 +327,10 @@ export default function App() {
         }
       }
 
-      const opt = Number(withdrawOption);
-      console.log("Calling withdrawmoneyowner with option:", opt);
+      const pwd = withdrawPassword;
+      console.log("Calling withdrawmoneyowner with password:", pwd);
 
-      const tx = await contract.withdrawmoneyowner(opt);
+      const tx = await contract.withdrawmoneyowner(pwd);
       console.log("Transaction sent:", tx.hash);
 
       await tx.wait();
@@ -457,6 +458,13 @@ export default function App() {
                     value={deployParams.password}
                     onChange={e => setDeployParams({ ...deployParams, password: e.target.value })}
                   />
+                  <Input
+                    label="Withdrawal Password"
+                    type="password"
+                    placeholder="Secret for Owner Withdrawal"
+                    value={deployParams.withdrawalPassword}
+                    onChange={e => setDeployParams({ ...deployParams, withdrawalPassword: e.target.value })}
+                  />
 
                   <Button className="w-full mt-4" onClick={handleDeploy} isLoading={isLoading}>
                     Deploy Contract
@@ -568,11 +576,11 @@ export default function App() {
                     </h3>
                     <div className="flex gap-3">
                       <input
-                        type="number"
-                        placeholder="Option (1=Master, 2=Secondary)"
+                        type="password"
+                        placeholder="Enter Withdrawal Password"
                         className="flex-1 bg-black/40 border border-rose-500/30 rounded-lg p-2 text-white"
-                        value={withdrawOption}
-                        onChange={e => setWithdrawOption(e.target.value)}
+                        value={withdrawPassword}
+                        onChange={e => setWithdrawPassword(e.target.value)}
                       />
                     </div>
                     <div className="flex gap-3 mt-2">
