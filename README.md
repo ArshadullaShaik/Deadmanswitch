@@ -4,6 +4,8 @@ A decentralized application (DApp) designed as a fail-safe mechanism for asset i
 
 The main problem this project is fixing crypto wallets are easily compromised by hackers its better to store crypto on a smartcontract even though the hacker gets the wallet access he couldn't be able to access the funds since the funds are password protected and encrypted using hashing algorithms and if suppose the owner is dead there will be a automatic mail sent to the benefeicary. the mail contains the password and address of the smart contract to access from site (//the email part is still in developing phase).
 
+**[🌐 Live Demo: deadkey.vercel.app](https://deadkey.vercel.app)**
+
 ## 🌟 Features
 
 -   **Smart Contract Vault**: Securely holds ETH/Schells via a Solidity smart contract.
@@ -89,4 +91,3 @@ The Watchtower script runs independently to monitor your contract and alert the 
 
 MIT
 
-## Website link : deadkey.vercel.app
